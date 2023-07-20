@@ -3,13 +3,63 @@
 const client = require("./client")
 
 async function dropTables() {
-  console.log("Dropping All Tables...")
   // drop all tables, in the correct order
+  console.log("Dropping All Tables...");
+  try {
+    
+  let dropTablesSql = `
+  DROP TABLE IF EXISTS routine_activities;
+  DROP TABLE IF EXISTS routines;
+  DROP TABLE IF EXISTS activities;
+  DROP TABLE IF EXISTS users;
+   `;
+   
+  await client.query(dropTablesSql);
+  } catch (error) {
+    console.error('Drop Table ERROR: ', error);
+    throw error;
+  }
 }
 
+// create all tables, in the correct order
 async function createTables() {
-  console.log("Starting to build tables...")
-  // create all tables, in the correct order
+  console.log("Starting to build tables...");
+  try {
+    const createTablesSql = `
+      CREATE TABLE IF NOT EXISTS users(
+        id SERIAL PRIMARY KEY,
+        username varchar(255) UNIQUE NOT NULL,
+        password varchar(255) NOT NULL
+      );
+    
+      CREATE TABLE IF NOT EXISTS activities(id SERIAL   PRIMARY KEY,
+        name varchar(255) UNIQUE NOT NULL,
+        description TEXT NOT NULL
+      );
+
+      CREATE TABLE IF NOT EXISTS routines(
+        id SERIAL PRIMARY KEY,
+        "creatorId" INTEGER REFERENCES users(id),
+        "isPublic" BOOLEAN DEFAULT FALSE,
+        name VARCHAR(255) UNIQUE NOT NULL,
+        goal TEXT NOT NULL
+      );
+      
+      CREATE TABLE IF NOT EXISTS routine_activities(
+        id SERIAL PRIMARY KEY,
+        "routineId" INTEGER REFERENCES routines (id),
+        "activityId" INTEGER REFERENCES routines (id),
+        duration INTEGER,
+      count INTEGER
+      );
+    `;
+    console.log("CREATE TABLES SQL: ", createTablesSql)
+    await client.query(createTablesSql);
+    console.log("Finished creating tables!");
+  } catch (error) {
+    console.error("Error creating table:", error);
+    throw error;
+  }
 }
 
 /* 
