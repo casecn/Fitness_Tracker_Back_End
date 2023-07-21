@@ -30,19 +30,19 @@
   "homepage": "https://github.com/wallacepreston/fitnesstrackr#readme",
   "devDependencies": {
     "eslint": "^8.2.0",
-    "eslint-plugin-jest": "^25.2.4",
-    "nodemon": "^2.0.4",
+    "eslint-plugin-jest": "^27.2.3",
+    "nodemon": "^3.0.1",
     "supertest": "^6.1.6"
   },
   "dependencies": {
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
-    "chalk": "^4.0.0",
+    "chalk": "^5.3.0",
     "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
+    "dotenv": "^16.3.1",
     "express": "^4.17.1",
     "faker": "^4.1.0",
-    "jest": "^26.0.1",
+    "jest": "^29.6.1",
     "jsonwebtoken": "^9.0.1",
     "morgan": "^1.10.0",
     "pg": "^8.2.1"
