@@ -1,5 +1,5 @@
 // require in the database adapter functions as you write them (createUser, createActivity...)
-// const { } = require('./');
+const { createUser } = require("./");
 const client = require("./client")
 
 async function dropTables() {
@@ -53,7 +53,6 @@ async function createTables() {
       count INTEGER
       );
     `;
-    console.log("CREATE TABLES SQL: ", createTablesSql)
     await client.query(createTablesSql);
     console.log("Finished creating tables!");
   } catch (error) {
@@ -79,7 +78,7 @@ async function createInitialUsers() {
     const users = await Promise.all(usersToCreate.map(createUser))
 
     console.log("Users created:")
-    console.log(users)
+    //console.log(users)
     console.log("Finished creating users!")
   } catch (error) {
     console.error("Error creating users!")
