@@ -1,10 +1,27 @@
-const { Pool } = require('pg');
 
-const connectionString = process.env.DATABASE_URL || 'https://localhost:5432/fitness-dev';
+const { Pool } = require('pg');
+const { config } = require("dotenv");
+config()
+
+//const connectionString = process.env.DATABASE_URL 
+const {
+  USER,
+  HOST,
+  DATABASE,
+  PORT,
+} = process.env
 
 const client = new Pool({
-  connectionString,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined,
+  user: USER,
+  host: HOST,
+  database: DATABASE,
+  port: PORT,
 });
+
+
+
+
+//const client = new Pool({
+  //connectionString})
 
 module.exports = client;

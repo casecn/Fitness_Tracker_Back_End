@@ -18,7 +18,10 @@ async function getPublicRoutinesByActivity({ id }) {}
 
 async function updateRoutine({ id, ...fields }) {}
 
-async function destroyRoutine(id) {}
+async function destroyRoutine(id) {
+
+  
+}
 
 module.exports = {
   getRoutineById,
