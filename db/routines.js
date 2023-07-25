@@ -5,14 +5,21 @@ async function createRoutine({ creatorId, isPublic, name, goal }) {
   const routineSql = `INSERT INTO routines ("creatorId", "isPublic", name, goal) VALUES ($1, $2, $3, $4) ON CONFLICT (name) DO NOTHING RETURNING * ;`;
 
   const data = [creatorId, isPublic, name, goal];
-//console.log("CREATE_ROUTINE_DATA:", data);
-  const { rows } = await client.query(routineSql, data);
+
+  const { rows: routines } = await client.query(routineSql, data);
+console.log("CREATE_ROUTINE_DATA:", routines);  
   
-  
-  return rows;
+  return routines;
 }
 
-async function getRoutineById(id) {}
+async function getRoutineById(id) {
+  const getRoutineSql = `SELECT * FROM routines WHERE id = $1`;
+  const {
+    rows: routine,
+  } = await client.query(getRoutineSql, [id]);
+  return routine;
+  
+}
 
 async function getRoutinesWithoutActivities() {}
 
