@@ -1,5 +1,5 @@
 // require in the database adapter functions as you write them (createUser, createActivity...)
-const { createUser } = require("./");
+const { createUser, createRoutine, createActivity} = require("./");
 const client = require("./client")
 
 async function dropTables() {
@@ -78,7 +78,6 @@ async function createInitialUsers() {
     const users = await Promise.all(usersToCreate.map(createUser))
 
     console.log("Users created:")
-    //console.log(users)
     console.log("Finished creating users!")
   } catch (error) {
     console.error("Error creating users!")
