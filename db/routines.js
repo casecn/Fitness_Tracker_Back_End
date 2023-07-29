@@ -1,6 +1,5 @@
 const client = require("./client");
 const {
-  getRoutineActivitiesByRoutine,
   destroyRoutineActivity,
 } = require("./routine_activities");
 const { attachActivitiesToRoutines } = require("./activities");
@@ -117,7 +116,6 @@ async function getPublicRoutinesByActivity({ id }) {
     const { rows: routines } = await client.query(getRoutinesSql, [id]);
     
     const result = await attachActivitiesToRoutines(routines);
-    console.log("ROUTINE_RESULT:", result);
     return result;
   } catch (error) {
     console.error("getAllPublicRoutines ERROR", error);
@@ -133,7 +131,6 @@ async function updateRoutine({ id, ...fields }) {
     .join(",");
 
   const updateSql = `UPDATE routines SET ${placeHolders} WHERE id = $${dataArray.length} RETURNING *;`;
-  console.log("UPDATE_ROUTINES:", updateSql, dataArray);
   const {
     rows: [routines],
   } = await client.query(updateSql, dataArray);
@@ -148,7 +145,7 @@ async function destroyRoutine(id) {
     await destroyRoutineActivity(id);
     let deleteSql = `DELETE FROM routines
       WHERE id = $1 RETURNING *;`;
-    const { rows } = await client.query(deleteSql, [id]);
+    await client.query(deleteSql, [id]);
     return id;
   } catch (error) {
     console.error(error);
