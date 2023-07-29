@@ -168,15 +168,7 @@ async function createInitialRoutineActivities() {
     await getRoutinesWithoutActivities()
   const [bicep1, bicep2, chest1, chest2, leg1, leg2, leg3] =
     await getAllActivities()
-  //console.log("ACTIVITIES:", [
-    bicep1,
-    bicep2,
-    chest1,
-    chest2,
-    leg1,
-    leg2,
-    leg3,
-  ]);
+  
   const routineActivitiesToCreate = [
     {
       routineId: bicepRoutine.id,
