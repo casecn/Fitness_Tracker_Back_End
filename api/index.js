@@ -29,6 +29,20 @@ router.use(async (req, res, next) => {
   }
 });
 
+// router.use(async (req, res, next) => {
+//   const bearerHeader = req.headers['Authorization'];
+//   if (typeof bearerHeader !== 'undefined') {
+//     const bearer = bearerHeader.split(' ');
+//     const bearerToken = bearer[1];
+//     req.token = bearerToken;
+//     next();
+
+//   } else {
+//     res.sendStatus(403);
+//   }
+// });
+
+
 router.use((req, res, next) => {
   if (req.user) console.log("user is set", req.user);
   next();
