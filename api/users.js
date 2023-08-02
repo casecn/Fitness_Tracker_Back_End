@@ -19,10 +19,10 @@ router.use((req, res, next) => {
 router.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
   const user = await getUser({ username, password });
-
+console.log({user,line:22});
   if (user) {
     const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "1w" });
-
+console.log({token, line:25})
     res.send({
       message: "you're logged in!",
       user,
@@ -40,7 +40,7 @@ router.post("/login", async (req, res, next) => {
 // POST /api/users/register
 router.post("/register", async (req, res, next) => {
   const { username, password } = req.body;
-
+console.log({username,password, line:43});
   if (password.length < 8) {
     next({
       error: "some number",
@@ -80,7 +80,9 @@ router.post("/register", async (req, res, next) => {
 });
 // GET /api/users/me
 router.get("/me", requireUser, async (req, res) => {
+  console.log({user:req.user});
   res.send(req.user);
+  
 });
 
 // GET /api/users/:username/routines

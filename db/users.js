@@ -19,11 +19,13 @@ async function createUser({ username, password }) {
 }  
 //###### - - getUser - - ######
 async function getUser({ username, password }) {
+  console.log({username, password});
   const getUserSql = `
     SELECT * 
     FROM users
     WHERE username=$1;`;
   const { rows: [user], } = await client.query(getUserSql, [username]);
+  console.log({user});
   const hashedPassword = user.password;
   const passwordsMatch = await bycrypt.compare(password, hashedPassword);
   if (passwordsMatch){

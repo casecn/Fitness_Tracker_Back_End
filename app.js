@@ -1,35 +1,27 @@
 require("dotenv").config();
+const cors = require("cors");
 const express = require("express");
 const app = express();
-
-// Setup your Middleware and API Router here
 const morgan = require("morgan");
+// Setup your Middleware and API Router here
+app.use(cors());
 app.use(morgan("dev"));
-
 app.use(express.json());
 
-const cors = require("cors");
-app.use(cors());
+// const client = require("./db/client");
+// client.connect();
 
 const apiRouter = require("./api");
 app.use("/api", apiRouter);
+console.log('hello');
 
-app.get("*", (req, res) => {
-  res
-    .status(404)
-    .send({
-      error: "404 - Not Found",
-      message: "No route found for the requested URL",
-    });
-});
+// app.get("/api/users", (req, res) => {
+//   res.json({"username":"john"});
+// });
 
-app.use((error, req, res) => {
-  if (res.statusCode < 400) res.status(500);
-  res.send({
-    error: error.error,
-    name: error.name,
-    message: error.message,
-  });
-});
+// app.use( (req, res) => {
+//   res.status(404);
+//   res.send({ message: "Not Found" });
+// });
 
 module.exports = app;
