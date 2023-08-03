@@ -1,5 +1,4 @@
 const client = require('./client');
-const { addActivityToRoutine } = require("./routine_activities");
 
 // database functions
 async function createActivity({ name, description }) {
@@ -63,20 +62,14 @@ async function attachActivitiesToRoutines(routines) {
 }
 
 async function updateActivity({ id, ...fields }) {
-  let setSql=''; 
-  let data= []
-  //builed sql based on the field property
-  if(fields.name && !fields.description) {
-    setSql = `UPDATE activities SET name = $1 WHERE id = $2 RETURNING *;`;
-    data = [fields.name, id];
-  } else if(!fields.name && fields.description) {
-    setSql = `UPDATE activities SET description = $1 WHERE id = $2 RETURNING *;`;
-    data = [fields.description, id];
-  } else if(fields.name && fields.description) {
-    setSql = `UPDATE activities SET name = $1, description = $2 WHERE id = $3 RETURNING *;`;
-    data = [fields.name, fields.description, id];
-  }
-  const { rows: [activity], } = await client.query(setSql, data);
+  const dataArray = Object.values(fields);
+  dataArray.push(id);
+
+  const placeHolders = Object.keys(fields)
+    .map((key, index) => `"${key}" = $${index + 1}`).join(", ");
+
+  const setSql = `UPDATE activities SET ${placeHolders} WHERE id = $${ dataArray.length } RETURNING *;`;
+  const { rows: [activity], } = await client.query(setSql, dataArray);
     
   return activity;
 }

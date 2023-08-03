@@ -19,7 +19,6 @@ async function createUser({ username, password }) {
 }  
 //###### - - getUser - - ######
 async function getUser({ username, password }) {
-  console.log({username, password});
   const getUserSql = `
     SELECT * 
     FROM users
@@ -35,6 +34,10 @@ async function getUser({ username, password }) {
     console.error(`Password does not match: ${username}`)
     return null;
   }
+  } catch (error) {
+    console.error("getUser Error", error)
+  }
+  
 }
 //###### - - getUserById - - ######
 async function getUserById(userId) {

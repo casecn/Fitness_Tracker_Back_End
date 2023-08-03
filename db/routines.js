@@ -128,7 +128,7 @@ async function updateRoutine({ id, ...fields }) {
   dataArray.push(id);
   const placeHolders = Object.keys(fields)
     .map((key, index) => `"${key}" = $${index + 1}`)
-    .join(",");
+    .join(", ");
 
   const updateSql = `UPDATE routines SET ${placeHolders} WHERE id = $${dataArray.length} RETURNING *;`;
   const {
