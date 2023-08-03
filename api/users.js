@@ -80,7 +80,6 @@ console.log({username,password, line:43});
 });
 // GET /api/users/me
 router.get("/me", requireUser, async (req, res) => {
-  console.log({user:req.user});
   res.send(req.user);
   
 });
