@@ -34,9 +34,9 @@ async function getUser({ username, password }) {
     console.error(`Password does not match: ${username}`)
     return null;
   }
-  } catch (error) {
-    console.error("getUser Error", error)
-  }
+  // } catch (error) {
+  //   console.error("getUser Error", error)
+  // }
   
 }
 //###### - - getUserById - - ######
