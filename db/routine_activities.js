@@ -1,7 +1,4 @@
 const client = require('./client');
-const {getActivityById} = ('./activities');
-const { getRoutineById } = ("./routines.js");
-
 
 async function addActivityToRoutine({
   routineId,
